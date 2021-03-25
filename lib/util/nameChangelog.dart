@@ -1,14 +1,15 @@
 class NameChangelog{
 
-  static String appVersion = "0.0.3";
+  static String appVersion = "0.0.4";
   static String appName = "Moodie Fschmtz";
 
   static String changelogCurrent = '''  
   
 Current version:  
 
-0.0.3
-- GridView
+0.0.4
+- GridView Builder
+- Save Itens
 ''';
 
   static String changelogsOld = '''
