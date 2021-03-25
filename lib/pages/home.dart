@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boom_menu/flutter_boom_menu.dart';
+import 'package:intl/intl.dart';
+import 'package:moodiefschmtz/db/mood.dart';
 import 'package:moodiefschmtz/db/moodDao.dart';
+import 'package:moodiefschmtz/widgets/moodCard.dart';
 import 'configs/configs.dart';
 
 class Home extends StatefulWidget {
@@ -11,6 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   final db = MoodDao.instance;
   List<Map<String, dynamic>> moods = [];
+  String formattedDateOnlyDay = " ";
 
   @override
   bool get wantKeepAlive => true;
@@ -19,6 +23,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     getAllMoods();
+
+    var now = new DateTime.now();
+    var formatter = new DateFormat('dd');
+    formattedDateOnlyDay = formatter.format(now);
   }
 
   Future<void> getAllMoods() async {
@@ -26,16 +34,15 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
     setState(() {
       moods = resp;
     });
-    print(moods.length.toString());
   }
 
   void _saveMood(String name, String color) async {
-    Map<String, dynamic> row = {
-      MoodDao.columnName: name,
-      MoodDao.columnColor: color,
-      MoodDao.columnDate: " ",
-    };
-    final id = await db.insert(row);
+      Map<String, dynamic> row = {
+        MoodDao.columnName: name,
+        MoodDao.columnColor: color,
+        MoodDao.columnDate: formattedDateOnlyDay,
+      };
+      final id = await db.insert(row);
     getAllMoods();
   }
 
@@ -47,7 +54,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Moodie"), elevation: 2, actions: <Widget>[
+      appBar: AppBar(title: Text("Moodie"), elevation: 0, actions: <Widget>[
         IconButton(
             icon: Icon(
               Icons.settings,
@@ -73,20 +80,18 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                   shrinkWrap: true,
                   itemCount: moods.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 6,
+                    crossAxisCount: 5,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                    return MoodCard(
+                      key: UniqueKey(),
+                      mood: new Mood(
+                        id_mood:moods[index]['id_mood'],
+                        name:moods[index]['name'],
+                        color: moods[index]['color'],
+                        date: moods[index]['date'],
                       ),
-                      color: Color(int.parse(moods[index]['color'].substring(6, 16))),
-                      child: InkWell(
-                        customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        onLongPress: () => _deletar(moods[index]['id_mood']),
-                      ),
+                      delete: _deletar,
                     );
                   }
                   ),
@@ -102,9 +107,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         animatedIconTheme: IconThemeData(size: 22.0),
         overlayColor: Colors.black,
         overlayOpacity: 0.6,
-        marginBottom: 10,
+        marginBottom: 15,
         fabAlignment: Alignment.center,
-        fabPaddingTop: 20,
+        fabPaddingTop: 25,
         children: [
 
           MenuItem(
@@ -129,7 +134,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
             child: Icon(Icons.thumb_down_alt_outlined, color: Colors.black87),
             title: "Bad",
             titleColor: Colors.black87,
-            subtitle: "Not Good",
+            subtitle: "Problem !!! ",
             subTitleColor: Colors.black87,
             backgroundColor: Color(0xFFFF5252).withOpacity(0.9),
             onTap: () => _saveMood("Bad", "Color(0xFFFF5252)"),

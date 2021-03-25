@@ -66,12 +66,8 @@ used for testing and learning.
 
                 Text( ''' 
                       
-" Good code is simple. 
-Code reviews are a great way
-to train teams to write simple code. 
-Don’t be afraid to say 
-“this is hard to understand.” " 
-Eric Elliott
+“It’s never too late to be 
+what you might have been.” 
             
       ''',
                   textAlign: TextAlign.center,

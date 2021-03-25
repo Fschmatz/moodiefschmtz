@@ -1,17 +1,25 @@
 class NameChangelog{
 
-  static String appVersion = "0.5.0";
+  static String appVersion = "1.0.0";
   static String appName = "Moodie Fschmtz";
 
   static String changelogCurrent = '''  
   
 Current version:  
 
-0.5.0
-- Delete Itens
+1.0.0
+- Technically Usable
 ''';
 
   static String changelogsOld = '''
+
+0.6.0
+- Mood Class
+- MoodCard Widget
+- Date on MoodCard 
+
+0.5.0
+- Delete Itens
 
 0.4.0
 - GridView Builder
