@@ -39,6 +39,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
     getAllMoods();
   }
 
+  void _deletar(int id) async {
+    final deletado = await db.delete(id);
+    getAllMoods();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,13 +73,23 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                   shrinkWrap: true,
                   itemCount: moods.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5,
+                    crossAxisCount: 6,
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       color: Color(int.parse(moods[index]['color'].substring(6, 16))),
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        onLongPress: () => _deletar(moods[index]['id_mood']),
+                      ),
                     );
-                  }),
+                  }
+                  ),
               SizedBox(height: 30,),
             ],
           ),
@@ -86,9 +101,12 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         animatedIcon: AnimatedIcons.menu_close,
         animatedIconTheme: IconThemeData(size: 22.0),
         overlayColor: Colors.black,
-        overlayOpacity: 0.7,
-        marginBottom: 15,
+        overlayOpacity: 0.6,
+        marginBottom: 10,
+        fabAlignment: Alignment.center,
+        fabPaddingTop: 20,
         children: [
+
           MenuItem(
             child: Icon(Icons.thumb_up_alt_outlined, color: Colors.black87),
             title: "Good",
@@ -116,6 +134,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
             backgroundColor: Color(0xFFFF5252).withOpacity(0.9),
             onTap: () => _saveMood("Bad", "Color(0xFFFF5252)"),
           ),
+
         ],
       ),
     );
