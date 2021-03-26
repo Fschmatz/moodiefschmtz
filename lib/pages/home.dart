@@ -16,9 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home>{
   final db = MoodDao.instance;
   List<Map<String, dynamic>> moods = [];
-  String formattedDateOnlyDay = " ";
   List<Map<String, dynamic>> moodsEmptyAnim = [];
-
 
   @override
   void initState() {
@@ -26,31 +24,39 @@ class _HomeState extends State<Home>{
     getAllMoods();
   }
 
-  getAllMoods() async {
+  Future<void> getAllMoods() async {
     var resp = await db.queryAllRowsDesc();
     setState(() {
       moods = resp;
     });
   }
 
-  void _saveMood(String name, String color) async {
-
+  Future<void> _saveMood(String name, String color) async {
+    setState(() {
+      moods = moodsEmptyAnim;
+    });
+    /*
+    String formattedDateOnlyDay;
     var now = new DateTime.now();
     var formatter = new DateFormat('dd');
-    formattedDateOnlyDay = formatter.format(now);
+    formattedDateOnlyDay = formatter.format(now);*/
 
     Map<String, dynamic> row = {
       MoodDao.columnName: name,
       MoodDao.columnColor: color,
-      MoodDao.columnDate: formattedDateOnlyDay,
+      MoodDao.columnDate: " ",
     };
     final id = await db.insert(row);
-    Timer( Duration(seconds: 1), getAllMoods());
+    Future.delayed(Duration(milliseconds: 200), () {
+      getAllMoods();
+    });
   }
 
-  void _delete(int id) async {
-    final deletado = await db.delete(id);
-    Timer( Duration(seconds: 1), getAllMoods());
+  Future<void> _delete(int id) async {
+    final deleted = await db.delete(id);
+    Future.delayed(Duration(milliseconds: 200), () {
+      getAllMoods();
+    });
   }
 
   //BOTTOM MENU
@@ -91,9 +97,6 @@ class _HomeState extends State<Home>{
                         style: TextStyle(fontSize: 15, color: Colors.black87),
                       ),
                       onTap: () {
-                        setState(() {
-                          moods = moodsEmptyAnim;
-                        });
                         _saveMood("Good", "Color(0xFF4CAF50)");
                         Navigator.of(context).pop();
                       },
@@ -124,9 +127,6 @@ class _HomeState extends State<Home>{
                         style: TextStyle(fontSize: 15, color: Colors.black87),
                       ),
                       onTap: () {
-                        setState(() {
-                          moods = moodsEmptyAnim;
-                        });
                         _saveMood("Medium", "Color(0xFFFDD835)");
                         Navigator.of(context).pop();
                       },
@@ -157,9 +157,6 @@ class _HomeState extends State<Home>{
                         style: TextStyle(fontSize: 15, color: Colors.black87),
                       ),
                       onTap: () {
-                        setState(() {
-                          moods = moodsEmptyAnim;
-                        });
                         _saveMood("Bad", "Color(0xFFFF5252)");
                         Navigator.of(context).pop();
                       },
@@ -194,7 +191,7 @@ class _HomeState extends State<Home>{
                     itemBuilder: (BuildContext context, int index) {
                       return AnimationConfiguration.staggeredList (
                         position: index,
-                        duration: const Duration(milliseconds: 375),
+                        duration: const Duration(milliseconds: 400),
                         child: ScaleAnimation(
                           child: FadeInAnimation(
                             child: MoodCard(
