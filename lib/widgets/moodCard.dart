@@ -25,8 +25,8 @@ class _MoodCardState extends State<MoodCard> {
           ),
           child: Center(
               child: Text(
-            widget.mood.date,
-            style: TextStyle(fontSize: 18, color: Colors.black87,fontWeight: FontWeight.w600),
+            " ",//widget.mood.date
+            style: TextStyle(fontSize: 16, color: Colors.black87,fontWeight: FontWeight.w600),
           )),
           onLongPress: () => widget.delete(
             (widget.mood.id_mood),

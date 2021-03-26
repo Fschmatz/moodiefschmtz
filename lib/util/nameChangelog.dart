@@ -1,17 +1,27 @@
 class NameChangelog{
 
-  static String appVersion = "1.0.0";
+  static String appVersion = "1.2.0";
   static String appName = "Moodie Fschmtz";
 
   static String changelogCurrent = '''  
   
 Current version:  
 
-1.0.0
-- Technically Usable
+1.2.0
+- Small Fixes
+- Animation Fix
+- UI Changes
 ''';
 
   static String changelogsOld = '''
+
+1.1.0
+- Remove Boom Menu
+- Add with BottomSheet
+- Test Animation
+
+1.0.0
+- Technically Usable
 
 0.6.0
 - Mood Class
