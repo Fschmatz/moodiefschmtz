@@ -1,6 +1,6 @@
 class NameChangelog{
 
-  static String appVersion = "1.2.0";
+  static String appVersion = "1.3.0";
   static String appName = "Moodie Fschmtz";
 
   static String changelogCurrent = '''  
@@ -9,11 +9,15 @@ Current version:
 
 1.2.0
 - Small Fixes
-- Animation Fix
-- UI Changes
+- Counter Card
 ''';
 
   static String changelogsOld = '''
+
+1.2.0
+- Small Fixes
+- Animation Fix
+- UI Changes
 
 1.1.0
 - Remove Boom Menu

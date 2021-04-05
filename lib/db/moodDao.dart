@@ -13,8 +13,6 @@ class MoodDao {
   static final columnIdMood = 'id_mood';
   static final columnName = 'name';
   static final columnColor = 'color';
-  static final columnDate = 'date';
-
 
   MoodDao._privateConstructor();
   static final MoodDao instance = MoodDao._privateConstructor();
@@ -41,8 +39,7 @@ class MoodDao {
           CREATE TABLE $table (
             $columnIdMood INTEGER PRIMARY KEY,            
             $columnName TEXT NOT NULL,            
-            $columnColor TEXT NOT NULL,  
-            $columnDate TEXT           
+            $columnColor TEXT NOT NULL                  
           )
           ''');
   }
@@ -65,6 +62,11 @@ class MoodDao {
   Future<int> queryRowCount() async {
     Database db = await instance.database;
     return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
+  }
+
+  Future<int> queryRowCountByMood(String nameMood) async {
+    Database db = await instance.database;
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table WHERE name="$nameMood"'));
   }
 
   Future<int> update(Map<String, dynamic> row) async {

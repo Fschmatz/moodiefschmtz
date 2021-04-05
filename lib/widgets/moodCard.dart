@@ -23,11 +23,6 @@ class _MoodCardState extends State<MoodCard> {
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Center(
-              child: Text(
-            " ",//widget.mood.date
-            style: TextStyle(fontSize: 16, color: Colors.black87,fontWeight: FontWeight.w600),
-          )),
           onLongPress: () => widget.delete(
             (widget.mood.id_mood),
           ),

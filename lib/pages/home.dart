@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:moodiefschmtz/db/mood.dart';
 import 'package:moodiefschmtz/db/moodDao.dart';
+import 'package:moodiefschmtz/widgets/counterCard.dart';
 import 'package:moodiefschmtz/widgets/moodCard.dart';
 import 'configs/configs.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -13,15 +12,19 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home>{
+class _HomeState extends State<Home> {
   final db = MoodDao.instance;
   List<Map<String, dynamic>> moods = [];
   List<Map<String, dynamic>> moodsEmptyAnim = [];
+  int countGood;
+  int countMedium;
+  int countBad;
 
   @override
   void initState() {
     super.initState();
     getAllMoods();
+    getAllCounts();
   }
 
   Future<void> getAllMoods() async {
@@ -31,22 +34,30 @@ class _HomeState extends State<Home>{
     });
   }
 
+  Future<void> getAllCounts() async {
+    var respG = await db.queryRowCountByMood('Good');
+    var respM = await db.queryRowCountByMood('Medium');
+    var respB = await db.queryRowCountByMood('Bad');
+
+    setState(() {
+      countGood = respG;
+      countMedium = respM;
+      countBad = respB;
+    });
+  }
+
   Future<void> _saveMood(String name, String color) async {
     setState(() {
       moods = moodsEmptyAnim;
     });
-    /*
-    String formattedDateOnlyDay;
-    var now = new DateTime.now();
-    var formatter = new DateFormat('dd');
-    formattedDateOnlyDay = formatter.format(now);*/
 
     Map<String, dynamic> row = {
       MoodDao.columnName: name,
       MoodDao.columnColor: color,
-      MoodDao.columnDate: " ",
     };
     final id = await db.insert(row);
+
+    getAllCounts();
     Future.delayed(Duration(milliseconds: 200), () {
       getAllMoods();
     });
@@ -54,13 +65,14 @@ class _HomeState extends State<Home>{
 
   Future<void> _delete(int id) async {
     final deleted = await db.delete(id);
+    getAllCounts();
     Future.delayed(Duration(milliseconds: 200), () {
       getAllMoods();
     });
   }
 
   //BOTTOM MENU
-  void bottomMenu(context) {
+  void bottomMenuAddMood(context) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -153,7 +165,7 @@ class _HomeState extends State<Home>{
                             fontWeight: FontWeight.w600),
                       ),
                       subtitle: Text(
-                        "Problem !!!",
+                        "Problems !!!",
                         style: TextStyle(fontSize: 15, color: Colors.black87),
                       ),
                       onTap: () {
@@ -172,13 +184,20 @@ class _HomeState extends State<Home>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        title:Text("Moodie"),
-        elevation: 0,
-      ) ,
+        appBar: AppBar(
+          title: Text("Moodie"),
+          elevation: 0,
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(80.0),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+              child: CounterCard(key:UniqueKey(),countGood: countGood,countMedium: countMedium,countBad: countBad,),
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Column(
               children: [
                 GridView.builder(
@@ -186,12 +205,12 @@ class _HomeState extends State<Home>{
                     shrinkWrap: true,
                     itemCount: moods.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 6,
+                      crossAxisCount: 7,
                     ),
                     itemBuilder: (BuildContext context, int index) {
-                      return AnimationConfiguration.staggeredList (
+                      return AnimationConfiguration.staggeredList(
                         position: index,
-                        duration: const Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 250),
                         child: ScaleAnimation(
                           child: FadeInAnimation(
                             child: MoodCard(
@@ -200,7 +219,6 @@ class _HomeState extends State<Home>{
                                 id_mood: moods[index]['id_mood'],
                                 name: moods[index]['name'],
                                 color: moods[index]['color'],
-                                date: moods[index]['date'],
                               ),
                               delete: _delete,
                             ),
@@ -209,7 +227,7 @@ class _HomeState extends State<Home>{
                       );
                     }),
                 SizedBox(
-                  height: 30,
+                  height: 40,
                 ),
               ],
             ),
@@ -221,7 +239,7 @@ class _HomeState extends State<Home>{
               backgroundColor: Theme.of(context).accentColor,
               elevation: 0.0,
               onPressed: () {
-                bottomMenu(context);
+                bottomMenuAddMood(context);
               },
               child: Icon(
                 Icons.add,
@@ -237,6 +255,7 @@ class _HomeState extends State<Home>{
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                 IconButton(
+                    color: Theme.of(context).hintColor,
                     icon: Icon(
                       Icons.settings_outlined,
                       size: 23,
@@ -253,5 +272,3 @@ class _HomeState extends State<Home>{
         ));
   }
 }
-
-//Theme.of(context).textTheme.headline6.color)
