@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:moodiefschmtz/db/mood.dart';
 import 'package:moodiefschmtz/db/moodDao.dart';
-import 'package:moodiefschmtz/widgets/counterCard.dart';
 import 'package:moodiefschmtz/widgets/moodCard.dart';
 import 'configs/configs.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,9 +16,22 @@ class _HomeState extends State<Home> {
   final db = MoodDao.instance;
   List<Map<String, dynamic>> moods = [];
   List<Map<String, dynamic>> moodsEmptyAnim = [];
+
   int countGood;
   int countMedium;
   int countBad;
+
+  Map<String, double> dataMap = {
+    "Good": 0,
+    "Medium": 0,
+    "Bad": 0,
+  };
+
+  List<Color> colorList = [
+    Color(0xFF4CAF50).withOpacity(0.9),
+    Color(0xFFFDD835).withOpacity(0.9),
+    Color(0xFFFF5252).withOpacity(0.9),
+  ];
 
   @override
   void initState() {
@@ -43,6 +56,10 @@ class _HomeState extends State<Home> {
       countGood = respG;
       countMedium = respM;
       countBad = respB;
+
+      dataMap.update("Good", (value) => respG.toDouble());
+      dataMap.update("Medium", (value) => respM.toDouble());
+      dataMap.update("Bad", (value) => respB.toDouble());
     });
   }
 
@@ -181,25 +198,48 @@ class _HomeState extends State<Home> {
         });
   }
 
+  Widget PieChartPersonalized() {
+    return PieChart(
+      dataMap: dataMap,
+      chartRadius: MediaQuery.of(context).size.width / 3.4,
+      colorList: colorList,
+      legendOptions: LegendOptions(
+        showLegendsInRow: false,
+        legendPosition: LegendPosition.right,
+        showLegends: true,
+        legendTextStyle: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: Theme.of(context).primaryTextTheme.headline2.color,
+        ),
+      ),
+      chartValuesOptions: ChartValuesOptions(
+        showChartValueBackground: false,
+        showChartValues: true,
+        showChartValuesInPercentage: true,
+        showChartValuesOutside: false,
+        decimalPlaces: 0,
+        chartValueStyle:
+            TextStyle(fontWeight: FontWeight.w500, color: Colors.black87),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Moodie"),
           elevation: 0,
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(80.0),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              child: CounterCard(key:UniqueKey(),countGood: countGood,countMedium: countMedium,countBad: countBad,),
-            ),
-          ),
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 2, 10, 20),
+                  child: PieChartPersonalized(),
+                ),
                 GridView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
@@ -210,7 +250,7 @@ class _HomeState extends State<Home> {
                     itemBuilder: (BuildContext context, int index) {
                       return AnimationConfiguration.staggeredList(
                         position: index,
-                        duration: const Duration(milliseconds: 250),
+                        duration: const Duration(milliseconds: 200),
                         child: ScaleAnimation(
                           child: FadeInAnimation(
                             child: MoodCard(

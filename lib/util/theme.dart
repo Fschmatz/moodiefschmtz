@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 //CLARO
 ThemeData light = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Color(0xFFF1F1F9),
+    primaryColor: Color(0xFFF0F0F9),
     accentColor: Color(0xFF808184),
-    scaffoldBackgroundColor: Color(0xFFF1F1F9),
+    scaffoldBackgroundColor: Color(0xFFF0F0F9),
     cardTheme: CardTheme(
       color: Color(0xFFF5F5FE),
     ),
@@ -21,7 +21,7 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
     primaryColor: Color(0xFF202124),
-    accentColor: Color(0xFF393A3F),
+    accentColor: Color(0xFF404144),
     scaffoldBackgroundColor: Color(0xFF202124),
     cardTheme: CardTheme(
       color: Color(0xFF202124),
@@ -31,7 +31,7 @@ ThemeData dark = ThemeData(
     ),
     bottomAppBarColor: Color(0xFF1B1C1F),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFF1B1C1F)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFF202124)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';

@@ -12,13 +12,17 @@ class MoodCard extends StatefulWidget {
 }
 
 class _MoodCardState extends State<MoodCard> {
+
   @override
   Widget build(BuildContext context) {
+
+    Color cardColor = Color(int.parse(widget.mood.color.substring(6, 16)));
+
     return Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6),
         ),
-        color: Color(int.parse(widget.mood.color.substring(6, 16))),
+        color: cardColor,
         child: InkWell(
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
