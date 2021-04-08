@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:moodiefschmtz/db/mood.dart';
 import 'package:moodiefschmtz/db/moodDao.dart';
 import 'package:moodiefschmtz/widgets/moodCard.dart';
+import 'package:moodiefschmtz/widgets/pie.dart';
 import 'configs/configs.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -105,10 +106,10 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(40, 45, 40, 15),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(15),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       dense: true,
                       tileColor: Color(0xFF4CAF50),
@@ -135,10 +136,10 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(40, 10, 40, 15),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(15),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       dense: true,
                       leading: Icon(Icons.thumbs_up_down_outlined,
@@ -165,10 +166,10 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(40, 10, 40, 50),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(15),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       dense: true,
                       leading: Icon(Icons.thumb_down_alt_outlined,
@@ -198,37 +199,17 @@ class _HomeState extends State<Home> {
         });
   }
 
-  Widget PieChartPersonalized() {
-    return PieChart(
-      dataMap: dataMap,
-      chartRadius: MediaQuery.of(context).size.width / 3.4,
-      colorList: colorList,
-      legendOptions: LegendOptions(
-        showLegendsInRow: false,
-        legendPosition: LegendPosition.right,
-        showLegends: true,
-        legendTextStyle: TextStyle(
-          fontWeight: FontWeight.w600,
-          color: Theme.of(context).primaryTextTheme.headline2.color,
-        ),
-      ),
-      chartValuesOptions: ChartValuesOptions(
-        showChartValueBackground: false,
-        showChartValues: true,
-        showChartValuesInPercentage: true,
-        showChartValuesOutside: false,
-        decimalPlaces: 0,
-        chartValueStyle:
-            TextStyle(fontWeight: FontWeight.w500, color: Colors.black87),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Moodie"),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Moodie"),
+              Text(moods.length.toString()+" Days"),
+            ],
+          ),
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -236,10 +217,7 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 2, 10, 20),
-                  child: PieChartPersonalized(),
-                ),
+                Pie(dataMap),
                 GridView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,

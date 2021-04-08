@@ -35,6 +35,9 @@ class _ConfigsState extends State<Configs> {
                 elevation: 0,
                 margin: const EdgeInsets.all(2.0),
                 color: Colors.green,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
                 child: ListTile(
                   title: Text(
                     "Flutter " +
