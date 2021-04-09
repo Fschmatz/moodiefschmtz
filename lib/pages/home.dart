@@ -6,7 +6,6 @@ import 'package:moodiefschmtz/widgets/moodCard.dart';
 import 'package:moodiefschmtz/widgets/pie.dart';
 import 'configs/configs.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:pie_chart/pie_chart.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -207,7 +206,7 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Moodie"),
-              Text(moods.length.toString()+" Days"),
+              Text(moods.length.toString()+" Days",style: TextStyle(color: Theme.of(context).hintColor),),
             ],
           ),
           elevation: 0,

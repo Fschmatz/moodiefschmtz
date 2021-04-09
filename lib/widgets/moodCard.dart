@@ -19,14 +19,14 @@ class _MoodCardState extends State<MoodCard> {
     Color cardColor = Color(int.parse(widget.mood.color.substring(6, 16)));
 
     return Card(
-      elevation: 2,
+      elevation: 3,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(5),
         ),
         color: cardColor,
         child: InkWell(
           customBorder: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(5),
           ),
           onLongPress: () => widget.delete(
             (widget.mood.id_mood),

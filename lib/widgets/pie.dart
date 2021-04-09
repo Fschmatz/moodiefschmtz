@@ -22,11 +22,11 @@ class Pie extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8)),
           side: BorderSide(
             color: Colors.grey.withOpacity(0.3),
-            width: 1,
+            width: 1.5,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
           child: PieChart(
             dataMap: dataMap,
             chartRadius: MediaQuery.of(context).size.width / 3.4,
