@@ -23,7 +23,6 @@ class _ConfigsState extends State<Configs> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Settings"),
-          centerTitle: true,
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -36,7 +35,7 @@ class _ConfigsState extends State<Configs> {
                 margin: const EdgeInsets.all(2.0),
                 color: Colors.green,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
                 child: ListTile(
                   title: Text(
@@ -55,13 +54,16 @@ class _ConfigsState extends State<Configs> {
               Card(
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                   side: BorderSide(
                     color: Colors.grey.withOpacity(0.3),
                     width: 1,
                   ),
                 ),
                 child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
                   leading: Icon(Icons.text_snippet_outlined),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   title: Text(
@@ -84,13 +86,16 @@ class _ConfigsState extends State<Configs> {
               Card(
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                   side: BorderSide(
                     color: Colors.grey.withOpacity(0.3),
                     width: 1,
                   ),
                 ),
                 child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
                   leading: Icon(Icons.text_snippet_outlined),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   title: Text(

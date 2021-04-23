@@ -21,12 +21,12 @@ class _MoodCardState extends State<MoodCard> {
     return Card(
       elevation: 3,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(8),
         ),
         color: cardColor,
         child: InkWell(
           customBorder: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(8),
           ),
           onLongPress: () => widget.delete(
             (widget.mood.id_mood),
