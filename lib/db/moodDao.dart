@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 class MoodDao {
 
-  static final _databaseName = "Moodie.db";
+  static final _databaseName = 'Moodie.db';
   static final _databaseVersion = 1;
 
   static final table = 'mood';

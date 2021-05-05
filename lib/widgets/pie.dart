@@ -21,7 +21,7 @@ class Pie extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
           side: BorderSide(
-            color: Colors.grey[600].withOpacity(0.5),
+            color: Colors.grey[800],
             width: 1,
           ),
         ),

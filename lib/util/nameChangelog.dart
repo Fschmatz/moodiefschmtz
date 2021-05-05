@@ -1,19 +1,19 @@
 class NameChangelog{
 
-  static String appVersion = "1.5.2";
+  static String appVersion = "1.6.0";
   static String appName = "Moodie Fschmtz";
 
-  static String changelogCurrent = '''  
-  
-Current version:  
-
-1.5.2
-- Days on AppBar
-- Small Ui Changes 
-- Small Fixes
+  static String changelogCurrent = '''
+1.6.0
+- New Settings Page
+- Small UI Changes 
 ''';
 
   static String changelogsOld = '''
+1.5.2
+- Days on AppBar
+- Small UI Changes 
+- Small Fixes
 
 1.4.1
 - Pie Chart 

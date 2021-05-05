@@ -4,34 +4,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 //CLARO
 ThemeData light = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Color(0xFFF0F0F9),
+    primaryColor: Color(0xFFFFFFFF),
     accentColor: Color(0xFF808184),
-    scaffoldBackgroundColor: Color(0xFFF0F0F9),
+    scaffoldBackgroundColor: Color(0xFFFFFFFF),
     cardTheme: CardTheme(
-      color: Color(0xFFF5F5FE),
+      color: Color(0xFFF5F5F5),
     ),
     dialogTheme: DialogTheme(
-      backgroundColor: Color(0xFFF9F9FF),
+      backgroundColor: Color(0xFFF9F9F9),
     ),
-    bottomAppBarColor: Color(0xFFE6E6EF),
+    bottomAppBarColor: Color(0xFFE6E6E6),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFFE6E6EF)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFFF5F5F5)));
 
 //ESCURO
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Color(0xFF242425),
-    accentColor: Color(0xFF414142),
-    scaffoldBackgroundColor: Color(0xFF242425),
+    primaryColor: Color(0xFF202020),
+    accentColor: Color(0xFF414141),
+    scaffoldBackgroundColor: Color(0xFF202020),
     cardTheme: CardTheme(
-      color: Color(0xFF363637),
+      color: Color(0xFF2D2D2D),
     ),
     dialogTheme: DialogTheme(
       backgroundColor: Color(0xFF363637),
     ),
-    bottomAppBarColor: Color(0xFF1B1B1C),
+    bottomAppBarColor: Color(0xFF171717),
     bottomSheetTheme:
-        BottomSheetThemeData(modalBackgroundColor: Color(0xFF242425)));
+        BottomSheetThemeData(modalBackgroundColor: Color(0xFF252525)));
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'valorTema';

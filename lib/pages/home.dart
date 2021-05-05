@@ -4,7 +4,7 @@ import 'package:moodiefschmtz/db/mood.dart';
 import 'package:moodiefschmtz/db/moodDao.dart';
 import 'package:moodiefschmtz/widgets/moodCard.dart';
 import 'package:moodiefschmtz/widgets/pie.dart';
-import 'configs/configs.dart';
+import 'configs/settings.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Home extends StatefulWidget {
@@ -22,9 +22,9 @@ class _HomeState extends State<Home> {
   int countBad;
 
   Map<String, double> dataMap = {
-    "Good": 0,
-    "Medium": 0,
-    "Bad": 0,
+    'Good': 0,
+    'Medium': 0,
+    'Bad': 0,
   };
 
   List<Color> colorList = [
@@ -57,9 +57,9 @@ class _HomeState extends State<Home> {
       countMedium = respM;
       countBad = respB;
 
-      dataMap.update("Good", (value) => respG.toDouble());
-      dataMap.update("Medium", (value) => respM.toDouble());
-      dataMap.update("Bad", (value) => respB.toDouble());
+      dataMap.update('Good', (value) => respG.toDouble());
+      dataMap.update('Medium', (value) => respM.toDouble());
+      dataMap.update('Bad', (value) => respB.toDouble());
     });
   }
 
@@ -93,8 +93,8 @@ class _HomeState extends State<Home> {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(15.0),
-              topRight: const Radius.circular(15.0)),
+              topLeft: const Radius.circular(20.0),
+              topRight: const Radius.circular(20.0)),
         ),
         isScrollControlled: true,
         context: context,
@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
             child: Wrap(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 45, 40, 15),
+                  padding: const EdgeInsets.fromLTRB(50, 40, 50, 15),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: ListTile(
@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 10, 40, 15),
+                  padding: const EdgeInsets.fromLTRB(50, 10, 50, 15),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: ListTile(
@@ -163,7 +163,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 10, 40, 50),
+                  padding: const EdgeInsets.fromLTRB(50, 10, 50, 40),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: ListTile(
@@ -211,44 +211,45 @@ class _HomeState extends State<Home> {
           ),
           elevation: 0,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Column(
-              children: [
-                Pie(dataMap),
-                GridView.builder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: moods.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 7,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 200),
-                        child: ScaleAnimation(
-                          child: FadeInAnimation(
-                            child: MoodCard(
-                              key: UniqueKey(),
-                              mood: new Mood(
-                                id_mood: moods[index]['id_mood'],
-                                name: moods[index]['name'],
-                                color: moods[index]['color'],
-                              ),
-                              delete: _delete,
+        body: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+              child: Pie(dataMap),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: GridView.builder(
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: moods.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 7,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 200),
+                      child: ScaleAnimation(
+                        child: FadeInAnimation(
+                          child: MoodCard(
+                            key: UniqueKey(),
+                            mood: new Mood(
+                              id_mood: moods[index]['id_mood'],
+                              name: moods[index]['name'],
+                              color: moods[index]['color'],
                             ),
+                            delete: _delete,
                           ),
                         ),
-                      );
-                    }),
-                SizedBox(
-                  height: 40,
-                ),
-              ],
+                      ),
+                    );
+                  }),
             ),
-          ),
+            SizedBox(
+              height: 40,
+            ),
+          ],
         ),
         floatingActionButton: Container(
           child: FittedBox(
@@ -272,16 +273,19 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                 IconButton(
-                    color: Theme.of(context).hintColor,
+                    color: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .color
+                        .withOpacity(0.7),
                     icon: Icon(
                       Icons.settings_outlined,
-                      size: 23,
                     ),
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute<void>(
-                            builder: (BuildContext context) => Configs(),
+                            builder: (BuildContext context) => Settings(),
                             fullscreenDialog: true,
                           ));
                     }),
