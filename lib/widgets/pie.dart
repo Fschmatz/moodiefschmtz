@@ -19,11 +19,7 @@ class Pie extends StatelessWidget {
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          side: BorderSide(
-            color: Colors.grey[800],
-            width: 1,
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),

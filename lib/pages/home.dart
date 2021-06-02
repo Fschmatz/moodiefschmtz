@@ -103,93 +103,91 @@ class _HomeState extends State<Home> {
             child: Wrap(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 40, 50, 15),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      dense: true,
-                      tileColor: Color(0xFF4CAF50),
-                      leading: Icon(Icons.thumb_up_alt_outlined,
-                          color: Colors.black87),
-                      title: Text(
-                        "Good",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        "Fine !!! ",
-                        style: TextStyle(fontSize: 15, color: Colors.black87),
-                      ),
-                      onTap: () {
-                        _saveMood("Good", "Color(0xFF4CAF50)");
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: ListTile(title: Text("Choose Mood:",textAlign: TextAlign.center,style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w600),),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(50, 10, 50, 15),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      dense: true,
-                      leading: Icon(Icons.thumbs_up_down_outlined,
-                          color: Colors.black87),
-                      tileColor: Color(0xFFFDD835),
-                      title: Text(
-                        "Medium",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        "Not Good, Nor Bad",
-                        style: TextStyle(fontSize: 15, color: Colors.black87),
-                      ),
-                      onTap: () {
-                        _saveMood("Medium", "Color(0xFFFDD835)");
-                        Navigator.of(context).pop();
-                      },
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
+                    dense: true,
+                    tileColor: Color(0xFF4CAF50),
+                    leading: Icon(Icons.thumb_up_alt_outlined,
+                        color: Colors.black87),
+                    title: Text(
+                      "Good",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(
+                      "Fine !!! ",
+                      style: TextStyle(fontSize: 15, color: Colors.black87),
+                    ),
+                    onTap: () {
+                      _saveMood("Good", "Color(0xFF4CAF50)");
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 10, 50, 15),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    dense: true,
+                    leading: Icon(Icons.thumbs_up_down_outlined,
+                        color: Colors.black87),
+                    tileColor: Color(0xFFFDD835),
+                    title: Text(
+                      "Medium",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(
+                      "Not Good, Nor Bad",
+                      style: TextStyle(fontSize: 15, color: Colors.black87),
+                    ),
+                    onTap: () {
+                      _saveMood("Medium", "Color(0xFFFDD835)");
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(50, 10, 50, 40),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      dense: true,
-                      leading: Icon(Icons.thumb_down_alt_outlined,
-                          color: Colors.black87),
-                      tileColor: Color(0xFFFF5252),
-                      title: Text(
-                        "Bad",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        "Problems !!!",
-                        style: TextStyle(fontSize: 15, color: Colors.black87),
-                      ),
-                      onTap: () {
-                        _saveMood("Bad", "Color(0xFFFF5252)");
-                        Navigator.of(context).pop();
-                      },
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
+                    dense: true,
+                    leading: Icon(Icons.thumb_down_alt_outlined,
+                        color: Colors.black87),
+                    tileColor: Color(0xFFFF5252),
+                    title: Text(
+                      "Bad",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(
+                      "Problems !!!",
+                      style: TextStyle(fontSize: 15, color: Colors.black87),
+                    ),
+                    onTap: () {
+                      _saveMood("Bad", "Color(0xFFFF5252)");
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
               ],
@@ -205,8 +203,9 @@ class _HomeState extends State<Home> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Moodie"),
-              Text(moods.length.toString()+" Days",style: TextStyle(color: Theme.of(context).hintColor),),
+              Text('Moodie'),
+              moods.length == 1 ? Text(moods.length.toString()+" Day",style: TextStyle(color: Theme.of(context).hintColor),)
+              : Text(moods.length.toString()+" Days",style: TextStyle(color: Theme.of(context).hintColor),),
             ],
           ),
           elevation: 0,
@@ -246,9 +245,7 @@ class _HomeState extends State<Home> {
                     );
                   }),
             ),
-            SizedBox(
-              height: 40,
-            ),
+
           ],
         ),
         floatingActionButton: Container(
@@ -277,7 +274,7 @@ class _HomeState extends State<Home> {
                         .textTheme
                         .headline6
                         .color
-                        .withOpacity(0.7),
+                        .withOpacity(0.8),
                     icon: Icon(
                       Icons.settings_outlined,
                     ),

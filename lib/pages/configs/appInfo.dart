@@ -113,7 +113,7 @@ class AppInfo extends StatelessWidget {
             leading: Icon(Icons.messenger_outline),
             title: Text(
               "It’s never too late to be what you might have been.",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              style: TextStyle(fontSize: 16),
             ),
           ),
         ]));
