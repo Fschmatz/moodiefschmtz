@@ -3,6 +3,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //CLARO
 ThemeData light = ThemeData(
+    appBarTheme: const AppBarTheme(
+        color: Color(0xFFFFFFFF),
+        elevation: 0,
+        iconTheme: IconThemeData(
+            color: Color(0xFF000000)
+        ),
+        titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF000000))),
     brightness: Brightness.light,
     primaryColor: Color(0xFFFFFFFF),
     accentColor: Color(0xFF808184),
@@ -19,6 +29,13 @@ ThemeData light = ThemeData(
 
 //ESCURO
 ThemeData dark = ThemeData(
+    appBarTheme: const AppBarTheme(
+        color: Color(0xFF202020),
+        elevation: 0,
+        titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFFFFFFF))),
     brightness: Brightness.dark,
     primaryColor: Color(0xFF202020),
     accentColor: Color(0xFF484848),

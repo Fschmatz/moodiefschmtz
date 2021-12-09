@@ -24,7 +24,6 @@ class MoodDao {
     return _database;
   }
 
-  // Open db and create if it not exists
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
@@ -33,7 +32,6 @@ class MoodDao {
         onCreate: _onCreate);
   }
 
-  // SQL create DB
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (

@@ -19,7 +19,7 @@ class _MoodCardState extends State<MoodCard> {
     Color cardColor = Color(int.parse(widget.mood.color.substring(6, 16)));
 
     return Card(
-      elevation: 2,
+      elevation: 1,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

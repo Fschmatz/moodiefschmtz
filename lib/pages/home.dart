@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.fromLTRB(50, 10, 50, 15),
                   child: ListTile(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     dense: true,
                     tileColor: Color(0xFF4CAF50),
@@ -140,7 +140,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.fromLTRB(50, 10, 50, 15),
                   child: ListTile(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     dense: true,
                     leading: Icon(Icons.thumbs_up_down_outlined,
@@ -167,7 +167,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.fromLTRB(50, 10, 50, 40),
                   child: ListTile(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     dense: true,
                     leading: Icon(Icons.thumb_down_alt_outlined,
@@ -208,7 +208,6 @@ class _HomeState extends State<Home> {
               : Text(moods.length.toString()+" Days",style: TextStyle(color: Theme.of(context).hintColor),),
             ],
           ),
-          elevation: 0,
         ),
         body: ListView(
           children: [
@@ -248,19 +247,17 @@ class _HomeState extends State<Home> {
 
           ],
         ),
-        floatingActionButton: Container(
-          child: FittedBox(
-            child: FloatingActionButton(
-              backgroundColor: Theme.of(context).accentColor,
-              elevation: 0.0,
-              onPressed: () {
-                bottomMenuAddMood(context);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).accentColor,
+          onPressed: () {
+            bottomMenuAddMood(context);
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
