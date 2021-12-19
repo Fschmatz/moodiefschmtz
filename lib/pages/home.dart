@@ -104,9 +104,13 @@ class _HomeState extends State<Home> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: ListTile(title: Text("Choose Mood:",textAlign: TextAlign.center,style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w600),),
+                  child: ListTile(
+                    title: Text(
+                      "Choose Mood:",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 Padding(
@@ -204,8 +208,15 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Moodie'),
-              moods.length == 1 ? Text(moods.length.toString()+" Day",style: TextStyle(color: Theme.of(context).hintColor),)
-              : Text(moods.length.toString()+" Days",style: TextStyle(color: Theme.of(context).hintColor),),
+              moods.length == 1
+                  ? Text(
+                      moods.length.toString() + " Day",
+                      style: TextStyle(color: Theme.of(context).hintColor),
+                    )
+                  : Text(
+                      moods.length.toString() + " Days",
+                      style: TextStyle(color: Theme.of(context).hintColor),
+                    ),
             ],
           ),
         ),
@@ -244,7 +255,6 @@ class _HomeState extends State<Home> {
                     );
                   }),
             ),
-
           ],
         ),
         floatingActionButton: FloatingActionButton(
