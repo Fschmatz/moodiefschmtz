@@ -1,7 +1,7 @@
 class Mood{
-  int id_mood;
+  int idMood;
   String name;
   String color;
 
-  Mood({this.id_mood, this.name, this.color});
+  Mood({required this.idMood,required this.name,required this.color});
 }

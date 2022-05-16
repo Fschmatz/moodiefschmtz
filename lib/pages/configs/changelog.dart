@@ -1,54 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:moodiefschmtz/util/nameChangelog.dart';
+import '../../util/app_details.dart';
 
 class Changelog extends StatelessWidget {
-
-  Color themeColorApp = Colors.lime[600];
+  const Changelog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Color themeColorApp = Theme.of(context).colorScheme.secondary;
+
     return Scaffold(
         appBar: AppBar(
-          title: Text("Changelog"),
-          elevation: 0,
+          title: const Text("Changelog"),
         ),
         body: ListView(children: <Widget>[
           ListTile(
-              leading: SizedBox(
-                height: 0.1,
-              ),
-              title: Text("Current Version".toUpperCase(),
+              title: Text("Current Version",
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: themeColorApp))),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.article_outlined,
             ),
             title: Text(
-              NameChangelog.changelogCurrent,
-              style: TextStyle(fontSize: 16),
+              AppDetails.changelogCurrent,
             ),
           ),
-          Divider(),
           ListTile(
-            leading: SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Previous Versions".toUpperCase(),
+            title: Text("Previous Versions",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: themeColorApp)),
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.article_outlined,
             ),
             title: Text(
-              NameChangelog.changelogsOld,
-              style: TextStyle(fontSize: 16),
+              AppDetails.changelogsOld,
             ),
           ),
         ]));

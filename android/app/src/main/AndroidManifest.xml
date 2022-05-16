@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fschmtz.moodiefschmtz">
    <application
-        android:label="Moodie Fschmtz"
+        android:label="Moodie Fschmatz"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

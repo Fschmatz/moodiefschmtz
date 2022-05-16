@@ -14,7 +14,7 @@ class MoodDao {
   static final columnName = 'name';
   static final columnColor = 'color';
 
-  MoodDao._privateConstructor();
+  /*MoodDao._privateConstructor();
   static final MoodDao instance = MoodDao._privateConstructor();
   static Database _database;
 
@@ -23,6 +23,21 @@ class MoodDao {
     _database = await _initDatabase();
     return _database;
   }
+
+  _initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, _databaseName);
+    return await openDatabase(path,
+        version: _databaseVersion,
+        onCreate: _onCreate);
+  }*/
+
+  static Database? _database;
+  Future<Database> get database async =>
+      _database ??= await _initDatabase();
+
+  MoodDao._privateConstructor();
+  static final MoodDao instance = MoodDao._privateConstructor();
 
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -59,12 +74,12 @@ class MoodDao {
 
   Future<int> queryRowCount() async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'))!;
   }
 
   Future<int> queryRowCountByMood(String nameMood) async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table WHERE name="$nameMood"'));
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table WHERE name="$nameMood"'))!;
   }
 
   Future<int> update(Map<String, dynamic> row) async {
@@ -76,5 +91,10 @@ class MoodDao {
   Future<int> delete(int id) async {
     Database db = await instance.database;
     return await db.delete(table, where: '$columnIdMood = ?', whereArgs: [id]);
+  }
+
+  Future<void> clearDB() async {
+    Database db = await instance.database;
+    await db.rawQuery('DELETE FROM $table');
   }
 }

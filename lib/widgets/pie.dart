@@ -15,9 +15,9 @@ class Pie extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Card(
-        elevation: 2,
+        elevation: 1,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
@@ -33,7 +33,7 @@ class Pie extends StatelessWidget {
               showLegends: true,
               legendTextStyle: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).textTheme.headline1.color,
+                color: Theme.of(context).textTheme.headline1!.color!,
               ),
             ),
             chartValuesOptions: ChartValuesOptions(

@@ -1,15 +1,21 @@
-class NameChangelog{
+class AppDetails{
 
-  static String appVersion = "1.7.1";
-  static String appName = "Moodie Fschmtz";
+  static String appVersion = "1.8.0";
+  static String appName = "Moodie Fschmatz";
+  static String repositoryLink = "https://github.com/Fschmatz/moodiefschmtz";
 
   static String changelogCurrent = '''
-1.7.1
-- Small UI Changes
+1.8.0
+- System Theme
+- UI Changes
 - Small Fixes
 ''';
 
   static String changelogsOld = '''
+1.7.1
+- Small UI Changes
+- Small Fixes
+
 1.6.1
 - New Settings Page
 - Small UI Changes 

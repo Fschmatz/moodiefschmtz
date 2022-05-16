@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:moodiefschmtz/db/mood.dart';
-import 'package:moodiefschmtz/db/moodDao.dart';
-import 'package:moodiefschmtz/widgets/moodCard.dart';
+import 'package:moodiefschmtz/db/mood_dao.dart';
+import 'package:moodiefschmtz/widgets/mood_card.dart';
 import 'package:moodiefschmtz/widgets/pie.dart';
 import 'configs/settings.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -17,9 +18,9 @@ class _HomeState extends State<Home> {
   List<Map<String, dynamic>> moods = [];
   List<Map<String, dynamic>> moodsEmptyAnim = [];
 
-  int countGood;
-  int countMedium;
-  int countBad;
+  late int countGood;
+  late int countMedium;
+  late int countBad;
 
   Map<String, double> dataMap = {
     'Good': 0,
@@ -35,10 +36,15 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    appStart();
     super.initState();
-    getAllMoods();
-    getAllCounts();
   }
+
+  Future<void> appStart() async{
+    await getAllMoods();
+    await getAllCounts();
+  }
+
 
   Future<void> getAllMoods() async {
     var resp = await db.queryAllRowsDesc();
@@ -88,13 +94,17 @@ class _HomeState extends State<Home> {
     });
   }
 
+  String getFormattedDate() {
+    return Jiffy(DateTime.now()).yMMMM;
+  }
+
   //BOTTOM MENU
   void bottomMenuAddMood(context) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(20.0),
-              topRight: const Radius.circular(20.0)),
+              topLeft: const Radius.circular(16.0),
+              topRight: const Radius.circular(16.0)),
         ),
         isScrollControlled: true,
         context: context,
@@ -203,97 +213,86 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Moodie'),
-              moods.length == 1
-                  ? Text(
-                      moods.length.toString() + " Day",
-                      style: TextStyle(color: Theme.of(context).hintColor),
-                    )
-                  : Text(
-                      moods.length.toString() + " Days",
-                      style: TextStyle(color: Theme.of(context).hintColor),
-                    ),
-            ],
+      appBar: AppBar(
+        title: Text('Moodie'),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.settings_outlined,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => Settings(),
+                    )).then((value) => appStart());
+              }),
+        ],
+      ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+            child: Pie(dataMap),
           ),
-        ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-              child: Pie(dataMap),
+          ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  getFormattedDate(),
+                ),
+                moods.length == 1
+                    ? Text(
+                        moods.length.toString() + " Day",
+                      )
+                    : Text(
+                        moods.length.toString() + " Days",
+                      ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: GridView.builder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: moods.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return AnimationConfiguration.staggeredList(
-                      position: index,
-                      duration: const Duration(milliseconds: 200),
-                      child: ScaleAnimation(
-                        child: FadeInAnimation(
-                          child: MoodCard(
-                            key: UniqueKey(),
-                            mood: new Mood(
-                              id_mood: moods[index]['id_mood'],
-                              name: moods[index]['name'],
-                              color: moods[index]['color'],
-                            ),
-                            delete: _delete,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+            child: GridView.builder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: moods.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 200),
+                    child: ScaleAnimation(
+                      child: FadeInAnimation(
+                        child: MoodCard(
+                          key: UniqueKey(),
+                          mood: new Mood(
+                            idMood: moods[index]['id_mood'],
+                            name: moods[index]['name'],
+                            color: moods[index]['color'],
                           ),
+                          delete: _delete,
                         ),
                       ),
-                    );
-                  }),
-            ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).accentColor,
-          onPressed: () {
-            bottomMenuAddMood(context);
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-          child: Container(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                IconButton(
-                    color: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .color
-                        .withOpacity(0.8),
-                    icon: Icon(
-                      Icons.settings_outlined,
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => Settings(),
-                            fullscreenDialog: true,
-                          ));
-                    }),
-              ])),
-        ));
+                  );
+                }),
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          bottomMenuAddMood(context);
+        },
+        child: Icon(
+          Icons.add_outlined,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+      ),
+    );
   }
 }

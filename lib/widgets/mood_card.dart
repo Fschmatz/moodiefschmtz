@@ -8,7 +8,7 @@ class MoodCard extends StatefulWidget {
   Mood mood;
   Function(int) delete;
 
-  MoodCard({Key key, this.mood, this.delete}) : super(key: key);
+  MoodCard({Key? key,required this.mood,required this.delete}) : super(key: key);
 }
 
 class _MoodCardState extends State<MoodCard> {
@@ -29,7 +29,7 @@ class _MoodCardState extends State<MoodCard> {
             borderRadius: BorderRadius.circular(12),
           ),
           onLongPress: () => widget.delete(
-            (widget.mood.id_mood),
+            (widget.mood.idMood),
           ),
         ));
   }

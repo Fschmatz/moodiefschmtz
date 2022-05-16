@@ -1,126 +1,154 @@
 import 'package:flutter/material.dart';
-import 'package:moodiefschmtz/util/nameChangelog.dart';
-import 'package:moodiefschmtz/util/theme.dart';
-import 'package:provider/provider.dart';
-
-import 'appInfo.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:moodiefschmtz/db/mood_dao.dart';
+import '../../util/app_details.dart';
+import '../../util/dialog_select_theme.dart';
+import 'app_info.dart';
 import 'changelog.dart';
 
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 
-  Settings({Key key}) : super(key: key);
+  const Settings({Key? key}) : super(key: key);
 }
 
 class _SettingsState extends State<Settings> {
-  @override
-  void initState() {
-    super.initState();
+
+  void _deletarTodosLidos() async {
+    final db = MoodDao.instance;
+    await db.clearDB();
   }
 
-  Color themeColorApp = Colors.lime[600];
+  showAlertDialogOkDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Confirm",
+          ),
+          content: const Text(
+            "Delete ?",
+          ),
+          actions: [
+            TextButton(
+              child: const Text(
+                "Yes",
+              ),
+              onPressed: () {
+                _deletarTodosLidos();
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  String getThemeStringFormatted() {
+    String theme = EasyDynamicTheme.of(context)
+        .themeMode
+        .toString()
+        .replaceAll('ThemeMode.', '');
+    if (theme == 'system') {
+      theme = 'system default';
+    }
+    return theme.replaceFirst(theme[0], theme[0].toUpperCase());
+  }
 
   @override
   Widget build(BuildContext context) {
+    Color themeColorApp = Theme.of(context).colorScheme.secondary;
+
     return Scaffold(
         appBar: AppBar(
-          title: Text("Settings"),
-          elevation: 0,
+          title: const Text("Settings"),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Card(
-                elevation: 1,
-                margin: const EdgeInsets.fromLTRB(16, 20, 16, 25),
-                color: themeColorApp,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                child: ListTile(
-                  title: Text(
-                    NameChangelog.appName + " " + NameChangelog.appVersion,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 17.5, color: Colors.black),
-                  ),
-                ),
+        body: ListView(
+          children: <Widget>[
+            Card(
+              elevation: 1,
+              margin: const EdgeInsets.fromLTRB(16, 20, 16, 25),
+              color: themeColorApp,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
-              const Divider(),
-              ListTile(
-                leading: SizedBox(height: 0.1,),
-                title:    Text(
-                    "About".toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: themeColorApp)
-                ),
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.info_outline,
-                ),
+              child: ListTile(
                 title: Text(
-                  "App Info",
-                  style: TextStyle(fontSize: 16),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => AppInfo(),
-                        fullscreenDialog: true,
-                      ));
-                },
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.text_snippet_outlined,
-                ),
-                title: Text(
-                  "Changelog",
-                  style: TextStyle(fontSize: 16),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => Changelog(),
-                        fullscreenDialog: true,
-                      ));
-                },
-              ),
-              const Divider(),
-              ListTile(
-                leading: SizedBox(height: 0.1,),
-                title:    Text(
-                    "General".toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: themeColorApp)
+                  AppDetails.appName + " " + AppDetails.appVersion,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 17.5, color: Colors.black),
                 ),
               ),
-              Consumer<ThemeNotifier>(
-                builder: (context, notifier, child) => SwitchListTile(
-                    title: Text(
-                      "Dark Theme",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    secondary: Icon(Icons.brightness_6_outlined),
-                    activeColor: Colors.blue,
-                    value: notifier.darkTheme,
-                    onChanged: (value) {
-                      notifier.toggleTheme();
-                    }),
+            ),
+            ListTile(
+              title: Text("General",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: themeColorApp)),
+            ),
+            ListTile(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const DialogSelectTheme();
+                  }),
+              leading: const Icon(Icons.brightness_6_outlined),
+              title: const Text(
+                "App Theme",
               ),
-            ],
-          ),
+              subtitle: Text(
+                getThemeStringFormatted(),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline),
+              title: const Text("Clear List"),
+              onTap: () {
+                showAlertDialogOkDelete(context);
+              },
+            ),
+            ListTile(
+              title: Text("About",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: themeColorApp)),
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.info_outline,
+              ),
+              title: const Text(
+                "App Info",
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const AppInfo(),
+                    ));
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.article_outlined,
+              ),
+              title: const Text(
+                "Changelog",
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const Changelog(),
+                    ));
+              },
+            ),
+          ],
         ));
   }
 }
