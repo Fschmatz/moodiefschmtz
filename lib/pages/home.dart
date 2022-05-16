@@ -253,7 +253,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: GridView.builder(
                 physics: ScrollPhysics(),
                 shrinkWrap: true,

@@ -32,8 +32,7 @@ class Pie extends StatelessWidget {
               legendPosition: LegendPosition.right,
               showLegends: true,
               legendTextStyle: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).textTheme.headline1!.color!,
+                fontWeight: FontWeight.w400,
               ),
             ),
             chartValuesOptions: ChartValuesOptions(
