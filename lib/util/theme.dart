@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData light = ThemeData(
-    useMaterial3: true,
+    //useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: const Color(0xFFF0F2F2),
     canvasColor: const Color(0xFFF0F2F2),
@@ -38,7 +38,7 @@ ThemeData light = ThemeData(
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFF456900),
+      backgroundColor: Color(0xFF959699),//0xFF456900
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
@@ -63,7 +63,7 @@ ThemeData light = ThemeData(
     const BottomSheetThemeData(modalBackgroundColor: Color(0xFFF0F2F2)));
 
 ThemeData dark = ThemeData(
-    useMaterial3: true,
+    //useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: const Color(0xFF202020),
     scaffoldBackgroundColor: const Color(0xFF202020),
@@ -101,7 +101,7 @@ ThemeData dark = ThemeData(
       backgroundColor: Color(0xFF202020),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFFA6D654),
+      backgroundColor: Color(0xFF484848),//0xFFA6D654
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),

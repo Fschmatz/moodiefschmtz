@@ -1,11 +1,11 @@
 class AppDetails{
 
-  static String appVersion = "1.8.0";
+  static String appVersion = "1.8.1";
   static String appName = "Moodie Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/moodiefschmtz";
 
   static String changelogCurrent = '''
-1.8.0
+1.8.1
 - System Theme
 - UI Changes
 - Small Fixes

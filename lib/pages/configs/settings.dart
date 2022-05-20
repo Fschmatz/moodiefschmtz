@@ -15,7 +15,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
 
-  void _deletarTodosLidos() async {
+  void _clearListAndMonth() async {
     final db = MoodDao.instance;
     await db.clearDB();
   }
@@ -29,7 +29,7 @@ class _SettingsState extends State<Settings> {
             "Confirm",
           ),
           content: const Text(
-            "Delete ?",
+            "Clear data ?",
           ),
           actions: [
             TextButton(
@@ -37,7 +37,7 @@ class _SettingsState extends State<Settings> {
                 "Yes",
               ),
               onPressed: () {
-                _deletarTodosLidos();
+                _clearListAndMonth();
                 Navigator.of(context).pop();
               },
             )
@@ -106,7 +106,7 @@ class _SettingsState extends State<Settings> {
             ),
             ListTile(
               leading: const Icon(Icons.delete_outline),
-              title: const Text("Clear List"),
+              title: const Text("Clear List and Change Month"),
               onTap: () {
                 showAlertDialogOkDelete(context);
               },

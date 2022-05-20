@@ -6,7 +6,6 @@ import 'package:moodiefschmtz/db/mood_dao.dart';
 import 'package:moodiefschmtz/widgets/mood_card.dart';
 import 'package:moodiefschmtz/widgets/pie.dart';
 import 'configs/settings.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,7 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final db = MoodDao.instance;
   List<Map<String, dynamic>> moods = [];
-  List<Map<String, dynamic>> moodsEmptyAnim = [];
+  bool _loading = true;
 
   late int countGood;
   late int countMedium;
@@ -36,20 +35,25 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    appStart();
+    appStart(false);
     super.initState();
   }
 
-  Future<void> appStart() async{
-    await getAllMoods();
+  Future<void> appStart([bool showAnim = true]) async {
+    if (showAnim) {
+      setState(() {
+        _loading = true;
+      });
+    }
     await getAllCounts();
+    await getAllMoods();
   }
-
 
   Future<void> getAllMoods() async {
     var resp = await db.queryAllRowsDesc();
     setState(() {
       moods = resp;
+      _loading = false;
     });
   }
 
@@ -70,13 +74,10 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _saveMood(String name, String color) async {
-    setState(() {
-      moods = moodsEmptyAnim;
-    });
-
     Map<String, dynamic> row = {
       MoodDao.columnName: name,
       MoodDao.columnColor: color,
+      MoodDao.columnMonthYear: getFormattedDate(),
     };
     final id = await db.insert(row);
 
@@ -98,7 +99,6 @@ class _HomeState extends State<Home> {
     return Jiffy(DateTime.now()).yMMMM;
   }
 
-  //BOTTOM MENU
   void bottomMenuAddMood(context) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -235,51 +235,60 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
             child: Pie(dataMap),
           ),
-          ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  getFormattedDate(),
-                ),
-                moods.length == 1
-                    ? Text(
-                        moods.length.toString() + " Day",
-                      )
-                    : Text(
-                        moods.length.toString() + " Days",
-                      ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: GridView.builder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: moods.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 7,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return AnimationConfiguration.staggeredList(
-                    position: index,
-                    duration: const Duration(milliseconds: 200),
-                    child: ScaleAnimation(
-                      child: FadeInAnimation(
-                        child: MoodCard(
-                          key: UniqueKey(),
-                          mood: new Mood(
-                            idMood: moods[index]['id_mood'],
-                            name: moods[index]['name'],
-                            color: moods[index]['color'],
-                          ),
-                          delete: _delete,
-                        ),
-                      ),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 600),
+            child: _loading
+                ? Center(
+                    child: SizedBox.shrink(),
+                  )
+                : ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        moods.isEmpty
+                            ? Text(
+                                getFormattedDate(),
+                              )
+                            : Text(moods[0]['monthYear']),
+                        moods.length == 1
+                            ? Text(
+                                moods.length.toString() + " Day",
+                              )
+                            : Text(
+                                moods.length.toString() + " Days",
+                              ),
+                      ],
                     ),
-                  );
-                }),
+                  ),
+          ),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 600),
+            child: _loading
+                ? Center(
+                    child: SizedBox.shrink(),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: GridView.builder(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: moods.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 7,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return MoodCard(
+                            key: UniqueKey(),
+                            mood: new Mood(
+                              idMood: moods[index]['id_mood'],
+                              name: moods[index]['name'],
+                              color: moods[index]['color'],
+                             monthYear: moods[index]['monthYear']
+                            ),
+                            delete: _delete,
+                          );
+                        }),
+                  ),
           ),
         ],
       ),
@@ -290,7 +299,7 @@ class _HomeState extends State<Home> {
         },
         child: Icon(
           Icons.add_outlined,
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: Theme.of(context).textTheme.headline6!.color,
         ),
       ),
     );

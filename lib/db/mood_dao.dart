@@ -13,24 +13,7 @@ class MoodDao {
   static final columnIdMood = 'id_mood';
   static final columnName = 'name';
   static final columnColor = 'color';
-
-  /*MoodDao._privateConstructor();
-  static final MoodDao instance = MoodDao._privateConstructor();
-  static Database _database;
-
-  Future<Database> get database async {
-    if (_database != null) return _database;
-    _database = await _initDatabase();
-    return _database;
-  }
-
-  _initDatabase() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, _databaseName);
-    return await openDatabase(path,
-        version: _databaseVersion,
-        onCreate: _onCreate);
-  }*/
+  static final columnMonthYear = 'monthYear';
 
   static Database? _database;
   Future<Database> get database async =>
@@ -52,7 +35,8 @@ class MoodDao {
           CREATE TABLE $table (
             $columnIdMood INTEGER PRIMARY KEY,            
             $columnName TEXT NOT NULL,            
-            $columnColor TEXT NOT NULL                  
+            $columnColor TEXT NOT NULL,
+            $columnMonthYear TEXT NOT NULL                    
           )
           ''');
   }
