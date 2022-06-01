@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 ThemeData light = ThemeData(
-    //useMaterial3: true,
+    useMaterial3: true,
+    textTheme: const TextTheme(
+      titleMedium: TextStyle(fontWeight: FontWeight.w400),
+    ),
     brightness: Brightness.light,
     primaryColor: const Color(0xFFF0F2F2),
     canvasColor: const Color(0xFFF0F2F2),
@@ -18,6 +21,7 @@ ThemeData light = ThemeData(
       color: Color(0xFFF5F7F7),
     ),
     appBarTheme: const AppBarTheme(
+        surfaceTintColor: Color(0xFFF0F2F2),
         color: Color(0xFFF0F2F2),
         elevation: 0,
         iconTheme: IconThemeData(color: Color(0xFF000000)),
@@ -29,6 +33,7 @@ ThemeData light = ThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
+      surfaceTintColor: Color(0xFFFDFFFF),
       color: Color(0xFFFDFFFF),
     ),
     dialogTheme: const DialogTheme(
@@ -63,7 +68,10 @@ ThemeData light = ThemeData(
     const BottomSheetThemeData(modalBackgroundColor: Color(0xFFF0F2F2)));
 
 ThemeData dark = ThemeData(
-    //useMaterial3: true,
+    useMaterial3: true,
+    textTheme: const TextTheme(
+      titleMedium: TextStyle(fontWeight: FontWeight.w400),
+    ),
     brightness: Brightness.dark,
     primaryColor: const Color(0xFF202020),
     scaffoldBackgroundColor: const Color(0xFF202020),
@@ -74,6 +82,7 @@ ThemeData dark = ThemeData(
         onPrimary: Color(0xFF213600),
         secondary: Color(0xFFA6D654)),
     appBarTheme: const AppBarTheme(
+        surfaceTintColor: Color(0xFF202020),
         color: Color(0xFF202020),
         elevation: 0,
         iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
@@ -85,6 +94,7 @@ ThemeData dark = ThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
+      surfaceTintColor: Color(0xFF2D2D2D),
       color: Color(0xFF2D2D2D),
     ),
     dialogTheme: const DialogTheme(

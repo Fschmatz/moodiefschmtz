@@ -1,75 +1,76 @@
 class AppDetails{
 
-  static String appVersion = "1.8.1";
+  static String appVersion = "1.8.2";
   static String appName = "Moodie Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/moodiefschmtz";
 
   static String changelogCurrent = '''
-1.8.1
-- System Theme
-- UI Changes
-- Small Fixes
+1.8.2
+- System theme
+- UI changes
+- Small fixes
+- Flutter 3
 ''';
 
   static String changelogsOld = '''
 1.7.1
-- Small UI Changes
-- Small Fixes
+- Small ui changes
+- Small fixes
 
 1.6.1
-- New Settings Page
-- Small UI Changes 
-- Day/Days Fix
+- New settings page
+- Small ui changes 
+- Day/days fix
 
 1.5.2
-- Days on AppBar
-- Small UI Changes 
-- Small Fixes
+- Days on appbar
+- Small ui changes 
+- Small fixes
 
 1.4.1
-- Pie Chart 
-- Small Fixes
+- Pie chart 
+- Small fixes
 
 1.3.0
-- Small Fixes
-- Counter Card
+- Small fixes
+- Counter card
 
 1.2.0
-- Small Fixes
-- Animation Fix
-- UI Changes
+- Small fixes
+- Animation fix
+- UI changes
 
 1.1.0
-- Remove Boom Menu
-- Add with BottomSheet
-- Test Animation
+- Remove boom menu
+- Add with bottom sheet
+- Test animation
 
 1.0.0
-- Technically Usable
+- Technically usable
 
 0.6.0
-- Mood Class
-- MoodCard Widget
-- Date on MoodCard 
+- Mood class
+- Moodcard widget
+- Date on moodcard 
 
 0.5.0
-- Delete Itens
+- Delete itens
 
 0.4.0
-- GridView Builder
-- Save Itens
+- Gridview builder
+- Save itens
 
 0.3.0
-- GridView
+- Gridview
 
 0.2.0
-- TopBar
-- Boom Menu
+- Topbar
+- Settings
 
 0.1.0
-- Project Start                                  
+- Project start                                  
 
-      (ಠ‿ಠ)  
+      (ಠ‿ಠ)   
 ''';
 
 }

@@ -249,7 +249,7 @@ class _HomeState extends State<Home> {
                             ? Text(
                                 getFormattedDate(),
                               )
-                            : Text(moods[0]['monthYear']),
+                            : Text(moods[(moods.length - 1)]['monthYear']),
                         moods.length == 1
                             ? Text(
                                 moods.length.toString() + " Day",

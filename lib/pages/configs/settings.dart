@@ -98,7 +98,7 @@ class _SettingsState extends State<Settings> {
                   }),
               leading: const Icon(Icons.brightness_6_outlined),
               title: const Text(
-                "App Theme",
+                "App theme",
               ),
               subtitle: Text(
                 getThemeStringFormatted(),
@@ -106,7 +106,7 @@ class _SettingsState extends State<Settings> {
             ),
             ListTile(
               leading: const Icon(Icons.delete_outline),
-              title: const Text("Clear List and Change Month"),
+              title: const Text("Clear list and change month"),
               onTap: () {
                 showAlertDialogOkDelete(context);
               },
@@ -123,7 +123,7 @@ class _SettingsState extends State<Settings> {
                 Icons.info_outline,
               ),
               title: const Text(
-                "App Info",
+                "App info",
               ),
               onTap: () {
                 Navigator.push(
